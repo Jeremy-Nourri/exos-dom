@@ -1,0 +1,31 @@
+.container {
+    width: 350px;
+    height: 200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    margin: 0 auto;
+}
+.photo {
+    width: 90%;
+}
+.button-left, .button-right {
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+
+    position: absolute;
+    cursor: pointer;
+}
+.button-left {      
+    border-right:10px solid blue;
+    top: 50%;
+    left: 0;
+}
+.button-right {
+    border-left: 10px solid blue;
+    top: 50%;
+    right: 0;
+}
