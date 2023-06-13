@@ -39,5 +39,5 @@ function slidePictures(direction) {
     picture.src = data[currentPicture]
 }
 
-buttonAfter.addEventListener("click", slidePictures(1));
-buttonBefore.addEventListener("click", slidePictures(-1));
+buttonAfter.addEventListener("click", () => slidePictures(1));
+buttonBefore.addEventListener("click", () => slidePictures(-1));
