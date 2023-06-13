@@ -10,6 +10,11 @@
     border-radius: 15px;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
 .container__title {
     text-align: center;
     margin-top: 0.5rem;
@@ -29,7 +34,7 @@
     margin-top: 0.5rem;
     padding: 0.4rem;
     font-size: 0.8rem;
-    font-weight: 700    ;
+    font-weight: 700;
     cursor: pointer;
     border-radius: 15px;
     border:rgb(140, 176, 194) 0.3rem solid;
