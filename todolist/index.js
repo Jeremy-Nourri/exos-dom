@@ -14,11 +14,15 @@ title.setAttribute('class', 'container__title');
 title.textContent = "Liste de courses";
 container.appendChild(title);
 
+const form = document.createElement("form");
+form.setAttribute('class', 'form');
+container.appendChild(form);
+
 const labelInputText = document.createElement("label");
 labelInputText.setAttribute('class', 'container__input-label');
 labelInputText.setAttribute('for', 'article');
 labelInputText.textContent = "Nom de l'article";
-container.appendChild(labelInputText);
+form.appendChild(labelInputText);
 
 const inputText = document.createElement("input");
 inputText.setAttribute('class', 'container__input-text');
@@ -26,20 +30,22 @@ inputText.setAttribute('type', 'text');
 inputText.setAttribute('placeholder', "Entrez le nom d'un article");
 inputText.setAttribute('name', 'article');
 inputText.setAttribute('id', 'article');
-container.appendChild(inputText);
+form.appendChild(inputText);
 
 
 const button = document.createElement("button");
 button.setAttribute('class', 'container__button');
 button.setAttribute('type', 'submit');
 button.textContent = "Ajouter";
-container.appendChild(button);
+form.appendChild(button);
 
 const containerList = document.createElement('div');
 containerList.setAttribute('class', 'container-list');
 container.appendChild(containerList);
 
-function addArticle() {
+function addArticle(event) {
+    event.preventDefault();
+
     if (inputText.value === "") {
         return;
     }
@@ -48,10 +54,23 @@ function addArticle() {
         return;
     }
     data.push(inputText.value);
-
     displayListOfArticles();
     
     inputText.value = "";
+}
+
+function crossWordOfCheckBox() {
+    const checkbox = document.querySelectorAll('input[type="checkbox"]');
+    for(let element of checkbox){
+        element.addEventListener('change', function() {
+            if (this.checked) {
+                 this.parentNode.style.textDecoration = "line-through";
+            }
+            else {
+                 this.parentNode.style.textDecoration = "none";
+            }
+        });
+    }
 }
 
 function displayListOfArticles() {
@@ -75,22 +94,17 @@ function displayListOfArticles() {
             checkBoxLabel.setAttribute('for', element);
             checkBoxLabel.textContent = element;
             rowOfArticle.appendChild(checkBoxLabel);
-
-
         }
     }
+    crossWordOfCheckBox();
 }
+
 
 displayListOfArticles();
 
 button.addEventListener("click", addArticle);
+form.addEventListener("submit", addArticle);
 
-const checkbox = document.querySelector('input[type="checkbox"]');
-checkbox.addEventListener('change', function() {
-    if (this.checked) {
-        this.parentNode.style.textDecoration = "line-through";
-    }
-    else {
-        this.parentNode.style.textDecoration = "none";
-    }
-});
+
+
+
