@@ -76,28 +76,34 @@ function getRndInteger(min, max) {
 }
 
 function substractHealthForAttack() {
-    let randomNumber = getRndInteger(3, 10);
-    healthMonster -= randomNumber;
-    pOfMonsterProgressBar.textContent = healthMonster;
-    let randomNumberMonsterAttack = getRndInteger(5, 10);
-    healthPlayer -= randomNumberMonsterAttack;
-    pOfPlayerProgressBar.textContent = healthPlayer;
+    if (healthPlayer > 0 && healthMonster > 0) {
+        let randomNumber = getRndInteger(3, 10);
+        healthMonster -= randomNumber;
+        pOfMonsterProgressBar.textContent = healthMonster;
+        let randomNumberMonsterAttack = getRndInteger(5, 10);
+        healthPlayer -= randomNumberMonsterAttack;
+        pOfPlayerProgressBar.textContent = healthPlayer;
+    }
 }
 
 function substractHealthForSpecialAttack() {
-    let randomNumber = getRndInteger(10, 20);
-    healthMonster -= randomNumber;
-    pOfMonsterProgressBar.textContent = healthMonster;
-    let randomNumberMonsterAttack = getRndInteger(5, 10);
-    healthPlayer -= randomNumberMonsterAttack;
-    pOfPlayerProgressBar.textContent = healthPlayer;
+    if (healthPlayer > 0 && healthMonster > 0) {
+        let randomNumber = getRndInteger(10, 20);
+        healthMonster -= randomNumber;
+        pOfMonsterProgressBar.textContent = healthMonster;
+        let randomNumberMonsterAttack = getRndInteger(5, 10);
+        healthPlayer -= randomNumberMonsterAttack;
+        pOfPlayerProgressBar.textContent = healthPlayer;
+    }
 }
 
 function addHealthForPlayer() {
-    healthPlayer += 10;
-    let randomNumberMonsterAttack = getRndInteger(5, 10);
-    healthPlayer -= randomNumberMonsterAttack;
-    pOfPlayerProgressBar.textContent = healthPlayer;
+    if (healthPlayer < 90) {
+        healthPlayer += 10;
+        let randomNumberMonsterAttack = getRndInteger(5, 10);
+        healthPlayer -= randomNumberMonsterAttack;
+        pOfPlayerProgressBar.textContent = healthPlayer;
+    }
 }
 
 function blockHealthValue() {
@@ -117,17 +123,13 @@ function blockHealthValue() {
 ///////// events listener 
 
 buttonAttack.addEventListener("click", () => {
-    if (healthPlayer > 0 && healthMonster > 0) {
-        substractHealthForAttack();
-    }
+    substractHealthForAttack();
     blockHealthValue();
 });
 
 buttonSpecial.addEventListener("click", () => {
-    if (healthPlayer > 0 && healthMonster > 0) {
-        substractHealthForSpecialAttack();
-    }
+    substractHealthForSpecialAttack();
     blockHealthValue();
 });
 
-
+buttonHeal.addEventListener("click", addHealthForPlayer);
