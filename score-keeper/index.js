@@ -26,33 +26,33 @@ spanLeft.textContent = 0;
 const spanRight = createElemWithClass("span", "text-score__span-right", textScore);;
 spanRight.textContent = 0;
 
-const form = createElemWithClass("form", "container__form", container)
+const form = createElemWithClass("form", "container__form", container);
 
-const labelInputNumber = createElemWithClass("label", "form__label-input", form)
+const labelInputNumber = createElemWithClass("label", "form__label-input", form);
 labelInputNumber.setAttribute("for", "quantity");
 labelInputNumber.textContent = "Playing to : ";
 
-const spanInLabel = createElemWithClass("span", "label-text__span", labelInputNumber)
+const spanInLabel = createElemWithClass("span", "label-text__span", labelInputNumber);
 spanInLabel.textContent = "0";
 
-const inputNumber = createElemWithClass("input", "form__input-number", form)
+const inputNumber = createElemWithClass("input", "form__input-number", form);
 inputNumber.setAttribute("type", "number");
 inputNumber.setAttribute("id", "quantity");
 inputNumber.setAttribute("name", "quantity");
 
-const buttonPlayer1 = createElemWithClass("button", "form__button", form)
+const buttonPlayer1 = createElemWithClass("button", "form__button", form);
 buttonPlayer1.setAttribute("type", "button");
-buttonPlayer1.disabled = "true"
+buttonPlayer1.disabled = "true";
 buttonPlayer1.textContent = "Player 1";
 
-const buttonPlayer2 = createElemWithClass("button", "form__button", form)
+const buttonPlayer2 = createElemWithClass("button", "form__button", form);
 buttonPlayer2.setAttribute("type", "button");
 buttonPlayer2.disabled = "true"
 buttonPlayer2.textContent = "Player 2";
 
-const buttonReset = createElemWithClass("button", "form__button-reset", form)
+const buttonReset = createElemWithClass("button", "form__button-reset", form);
 buttonReset.setAttribute("type", "button");
-buttonReset.disabled = "true"
+buttonReset.disabled = "true";
 buttonReset.textContent = "Reset";
 
 const buttons = document.getElementsByTagName("button");
