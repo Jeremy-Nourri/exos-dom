@@ -39,6 +39,7 @@ const inputNumber = createElemWithClass("input", "form__input-number", form);
 inputNumber.setAttribute("type", "number");
 inputNumber.setAttribute("id", "quantity");
 inputNumber.setAttribute("name", "quantity");
+inputNumber.setAttribute("min", "0");
 
 const buttonPlayer1 = createElemWithClass("button", "form__button", form);
 buttonPlayer1.setAttribute("type", "button");
