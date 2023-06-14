@@ -3,50 +3,127 @@
 // Score Keeper Vous devrez créer une page web contenant un petit formulaire de score. La page devra contenir au moins :
 // * Un score en cours affiché * Un score maximal à atteindre * Trois boutons : `Player 1`, `Player 2` et `Reset` * Optionnel : une mise en forme améliorée / SASS
 
+/////////////// function to add element in DOM with class name
+const createElemWithClass = (tag, className, parent) => {
+    const elem = document.createElement(tag);
+    elem.setAttribute("class", className);
+    parent.appendChild(elem);
+    return elem;
+};
+
+/////////////// add elements in DOM :
+
 const container = document.createElement("div");
 container.setAttribute("class", "container");
 document.body.appendChild(container);
 
-const textScore = document.createElement("p");
-textScore.setAttribute("class", "container__text-score" );
-container.appendChild(textScore);
+const textScore = createElemWithClass("p", "container__text-score", container);
+textScore.textContent = " to ";
 
-const form = document.createElement("form");
-form.setAttribute("class", "container__form");
-container.appendChild(form);
+const spanLeft = createElemWithClass("span", "text-score__span-left", textScore);
+spanLeft.textContent = 0;
 
-const labelInputText = document.createElement("label");
-labelInputText.setAttribute("class", "form__label-text");
-labelInputText.setAttribute("for", "text");
-labelInputText.textContent = "Ajouter le score :";
-form.appendChild(labelInputText);
+const spanRight = createElemWithClass("span", "text-score__span-right", textScore);;
+spanRight.textContent = 0;
 
-const inputText = document.createElement("input");
-inputText.setAttribute("class", "form__input-text");
-inputText.setAttribute("id", "text");
-form.appendChild(inputText);
+const form = createElemWithClass("form", "container__form", container)
 
-const buttonPlayer1 = document.createElement("button");
+const labelInputNumber = createElemWithClass("label", "form__label-input", form)
+labelInputNumber.setAttribute("for", "quantity");
+labelInputNumber.textContent = "Playing to : ";
+
+const spanInLabel = createElemWithClass("span", "label-text__span", labelInputNumber)
+spanInLabel.textContent = "0";
+
+const inputNumber = createElemWithClass("input", "form__input-number", form)
+inputNumber.setAttribute("type", "number");
+inputNumber.setAttribute("id", "quantity");
+inputNumber.setAttribute("name", "quantity");
+
+const buttonPlayer1 = createElemWithClass("button", "form__button", form)
+buttonPlayer1.setAttribute("type", "button");
+buttonPlayer1.disabled = "true"
 buttonPlayer1.textContent = "Player 1";
-form.appendChild(buttonPlayer1);
 
-const buttonPlayer2 = document.createElement("button");
+const buttonPlayer2 = createElemWithClass("button", "form__button", form)
+buttonPlayer2.setAttribute("type", "button");
+buttonPlayer2.disabled = "true"
 buttonPlayer2.textContent = "Player 2";
-form.appendChild(buttonPlayer2);
 
-const buttonReset = document.createElement("button");
+const buttonReset = createElemWithClass("button", "form__button-reset", form)
+buttonReset.setAttribute("type", "button");
+buttonReset.disabled = "true"
 buttonReset.textContent = "Reset";
-form.appendChild(buttonReset);
 
 const buttons = document.getElementsByTagName("button");
 
-for (let element of buttons) {
-    element.setAttribute("class", "form__button");
-    element.setAttribute("type", "button");
+/////////// functions :
+
+function addValue(element, value) {
+    element.textContent = Number(element.textContent) + value;
+}
+
+function reset() {
+    spanLeft.textContent = 0;
+    spanRight.textContent = 0;
+    spanInLabel.textContent = 0;
+    inputNumber.value = 0;
+    buttonPlayer1.disabled = true;
+    buttonPlayer2.disabled = true;
+    spanLeft.style.color = "black";
+    spanRight.style.color = "black";
+    const message = document.querySelector(".container__message");
+    if (message) {
+        message.remove();
+    }
 }
 
 
+////////////// events handler :
 
+buttonPlayer1.addEventListener("click", () => {
+    addValue(spanLeft, 1);
+    if (Number(spanLeft.textContent) === Number(inputNumber.value)) {
+        spanLeft.style.color = "green";
+        spanRight.style.color = "red";
+        buttonPlayer1.disabled = true;
+        buttonPlayer2.disabled = true;
+        const message = document.createElement("p");
+        message.setAttribute("class", "container__message");
+        container.appendChild(message);
+        message.textContent = "Player 1 ! You win !";
+    }
+});
 
+buttonPlayer2.addEventListener("click",() => {
+    addValue(spanRight, 1);
+    if (Number(spanRight.textContent) === Number(inputNumber.value)) {
+        spanRight.style.color = "green";
+        spanLeft.style.color = "red";
+        buttonPlayer1.disabled = true;
+        buttonPlayer2.disabled = true;
+        const message = document.createElement("p");
+        message.setAttribute("class", "container__message");
+        container.appendChild(message);
+        message.textContent = "Player 2 ! You win !";
+    }
+});
+
+buttonReset.addEventListener("click", reset);
+
+inputNumber.addEventListener("change", () => {
+    spanInLabel.textContent = inputNumber.value;
+    if (Number(inputNumber.value) > 0) {
+        for (let element of buttons) {
+            element.disabled = false;
+        }
+    }
+    if (Number(inputNumber.value) === 0) {
+        for (let element of buttons) {
+            element.disabled = true;
+        }
+    }
+    
+});
 
 
