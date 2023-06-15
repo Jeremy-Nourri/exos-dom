@@ -2,7 +2,6 @@
 // Monster Slayer (Optionnel) Vous devrez créer une page web contenant un petit jeu de combat avec un monstre. La page devra contenir au moins :
 // * Deux barre de vie dynamique (joueur et monstre) * 4 boutons : attaque, attaque spéciale, soin et abandon * Optionnel : Logs du combats (couleurs différenciées joueur et monstre)
 
-
 /////////////// function to add element in DOM with attribute class name
 const createElemWithClass = (tag, className, parent) => {
     const elem = document.createElement(tag);
@@ -52,9 +51,11 @@ const pOfPlayerProgressBar = document.querySelector(".progress-bar-player__p");
 
 /////////// ELEMENTS OF THE MIDDLE
 
-const divMiddle = createElemWithClass("div", "container__div-middle", container);
+const divMiddleStart = createElemWithClass("div", "container__div-middle-start", container);
 
-const buttonStart = createButton("div-middle__button-start", "START NEW GAME", divMiddle);
+const buttonStart = createButton("div-middle__button-start", "START NEW GAME", divMiddleStart);
+
+const divMiddle = createElemWithClass("div", "container__div-middle", container);
 
 const buttonAttack = createButton("div-middle__button-attack", "ATTACK", divMiddle);
 const buttonSpecial = createButton("div-middle__button-special", "SPECIAL ATTACK", divMiddle);
@@ -83,6 +84,11 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
 
+function displayHealthLevel(level, elementText, progressElement) {
+    elementText.textContent = level;
+    progressElement.style.width = `${level}%`;
+}
+
 function substractHealthForAttack() {
     if (healthPlayer <= 0 && healthMonster <= 0) {
         return
@@ -90,12 +96,10 @@ function substractHealthForAttack() {
     else {
         const randomNumber = getRndInteger(3, 10);
         healthMonster -= randomNumber;
-        pOfMonsterProgressBar.textContent = healthMonster;
-        progressBarOfMonster.style.width = `${healthMonster}%`
+        displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster)
         const randomNumberMonsterAttack = getRndInteger(5, 10);
         healthPlayer -= randomNumberMonsterAttack;
-        pOfPlayerProgressBar.textContent = healthPlayer;
-        progressBarOfPlayer.style.width = `${healthPlayer}%`
+        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
     }
 }
 
@@ -106,12 +110,10 @@ function substractHealthForSpecialAttack() {
     else {
         const randomNumber = getRndInteger(10, 20);
         healthMonster -= randomNumber;
-        pOfMonsterProgressBar.textContent = healthMonster;
-        progressBarOfMonster.style.width = `${healthMonster}%`
+        displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster)
         const randomNumberMonsterAttack = getRndInteger(5, 10);
         healthPlayer -= randomNumberMonsterAttack;
-        pOfPlayerProgressBar.textContent = healthPlayer;
-        progressBarOfPlayer.style.width = `${healthPlayer}%`
+        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
     }
 }
 
@@ -120,8 +122,7 @@ function addHealthForPlayer() {
         healthPlayer += 10;
         let randomNumberMonsterAttack = getRndInteger(5, 10);
         healthPlayer -= randomNumberMonsterAttack;
-        pOfPlayerProgressBar.textContent = healthPlayer;
-        progressBarOfPlayer.style.width = `${healthPlayer}%`
+        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
     }
 }
 
@@ -129,23 +130,28 @@ function displayModal() {
     modal.style.display = "flex";
 }
 
+function displayButtons() {
+    divMiddleStart.style.display = "none";
+    divMiddle.style.display = "flex";
+}
+
+function resetGame() {
+    divMiddleStart.style.display = "flex";
+    divMiddle.style.display = "none";
+    healthPlayer = 100;
+    healthMonster = 100;
+    displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
+    displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster)
+}
+
 function blockHealthValue() {
     if (healthPlayer <= 0) {
-        buttonAttack.disabled = true;
-        buttonSpecial.disabled = true;
-        buttonHeal.disabled = true;
-        buttonGive.disabled = true;
         progressBarOfPlayer.style.width = 0;
         pOfPlayerProgressBar.textContent = 0;
         displayModal();
         pModal.textContent = "GAME OVER !";
-       
     }
     if (healthMonster <= 0) {
-        buttonAttack.disabled = true;
-        buttonSpecial.disabled = true;
-        buttonHeal.disabled = true;
-        buttonGive.disabled = true;
         progressBarOfMonster.style.width = 0;
         pOfMonsterProgressBar.textContent = 0;
         displayModal();
@@ -156,9 +162,8 @@ function blockHealthValue() {
 function giveUp() {
     healthPlayer = 0
     pOfPlayerProgressBar.textContent = healthPlayer;
-    progressBarOfPlayer.style.width = `${healthPlayer}%`
+    progressBarOfPlayer.style.width = `${healthPlayer}%`;
 }
-
 
 /////////// events listener 
 
@@ -174,15 +179,15 @@ buttonSpecial.addEventListener("click", () => {
 
 buttonHeal.addEventListener("click", addHealthForPlayer);
 
-
 buttonGive.addEventListener("click", () => {
     giveUp();
     displayModal();
     pModal.textContent = "GAME OVER !";
 });
 
-
 cross.addEventListener("click", () => {
-    modal.style.display = "none"
+    modal.style.display = "none";
+    resetGame();
 })
 
+buttonStart.addEventListener("click", displayButtons);
