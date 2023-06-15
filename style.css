@@ -1,0 +1,29 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li {
+    margin-top: 1.7rem;
+    list-style-type: square;
+}
+
+a {
+    font-size: 1.3rem;
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    color: #0800ff;
+}
