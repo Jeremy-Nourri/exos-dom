@@ -1,5 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+    background-image: url("./img/background-game.jpg");
+    background-size: cover;
 }
 
 .container {
@@ -7,15 +9,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: brown;
+    background-color: transparent;
 }
 
 .container__div-top {
     width: 60%;
+    height: 30%;
     display: flex;
     margin-top: 2rem;
     justify-content: space-around;
-    background-color: cadetblue;
+    background-color: transparent;
 }
 
 .div-top__div-player,
@@ -24,11 +27,12 @@ body {
     display: flex;
     flex-direction: column;
     border: 0.1rem black solid;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    /* margin-top: 1.5rem;
+    margin-bottom: 1.5rem; */
     text-align: center;
     font-weight: 700;
 }
+
 
 .div-monster__progress-bar-container-monster, 
 .div-player__progress-bar-container-player {
@@ -60,7 +64,7 @@ body {
     
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-    background-color: rgb(95, 160, 118);
+    background-color: rgba(83, 30, 105, 0.88);
 }
 
 .container__div-middle {
@@ -83,7 +87,9 @@ button {
 
 .container__div-bottom {
     width: 60%;
-    background-color: rgb(106, 31, 150);
+    background-color: rgba(83, 30, 105, 0.88);
+    text-align: center;
+    color: #ffff;
 }
 
 .modal {
@@ -118,6 +124,7 @@ button {
 
 .modal__cross {
     width: 2rem;
+    display: none;
     position: absolute;
     top: 1rem;
     right: 1rem;
