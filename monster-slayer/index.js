@@ -274,6 +274,8 @@ cross.addEventListener("click", () => {
 });
 
 buttonStart.addEventListener("click", () => {
+    gifDragonDie.style.display = "none";
+    cross.style.display = "none";
     displayModal();
     pModal.textContent = "FIGHT !";
     setTimeout(() => {
