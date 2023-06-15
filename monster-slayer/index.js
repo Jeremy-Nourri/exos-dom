@@ -35,13 +35,17 @@ let healthMonster = 100;
 const divTop = createElemWithClass("div", "container__div-top", container);
 
 const divPlayer = createElemWithClass("div", "div-top__div-player", divTop);
-const nameOfPlayer = createElemWithClass("p", "div-player__p", divPlayer).textContent = "Player";
+const containerOfPlayerAvatar = createElemWithClass("img", "div-player__avatar", divPlayer);
+containerOfPlayerAvatar.src = "./img/warrior-avatar.jpg";
+
 const progessBarContainerOfPlayer = createElemWithClass("div", "div-player__progress-bar-container-player", divPlayer);
 const progressBarOfPlayer = createElemWithClass("div", "div-player__progress-bar-player", progessBarContainerOfPlayer);
 createElemWithClass("p", "progress-bar-player__p", progressBarOfPlayer).textContent = healthPlayer;
 
 const divMonster = createElemWithClass("div", "div-top__div-monster", divTop);
-const nameOfMonster = createElemWithClass("p", "div-monster__p", divMonster).textContent = "Monster";
+const containerOfMonsterAvatar = createElemWithClass("img", "div-monster__avatar", divMonster);
+containerOfMonsterAvatar.src = "./img/monster-avatar.jpg";
+
 const progessBarContainerOfMonster = createElemWithClass("div", "div-monster__progress-bar-container-monster", divMonster);
 const progressBarOfMonster = createElemWithClass("div", "div-monster__progress-bar-monster", progessBarContainerOfMonster);
 createElemWithClass("p", "progress-bar-monster__p", progressBarOfMonster).textContent = healthMonster;
@@ -59,13 +63,17 @@ const divMiddle = createElemWithClass("div", "container__div-middle", container)
 
 const buttonAttack = createButton("div-middle__button-attack", "ATTACK", divMiddle);
 const buttonSpecial = createButton("div-middle__button-special", "SPECIAL ATTACK", divMiddle);
-const buttonHeal = createButton("div-middle__button-attack", "HEAL", divMiddle);
+const buttonHeal = createButton("div-middle__button-attack", "HEAL +10", divMiddle);
 const buttonGive = createButton("div-middle__button-give","GIVE UP", divMiddle);
 
 /////////// BOTTOM ELEMENTS
 
 const divBottom = createElemWithClass("div", "container__div-bottom", container);
-const pDivBottom = createElemWithClass("p", "div-bottom__p", divBottom).textContent = "Attacks description";
+const pDivBottom = createElemWithClass("h3", "div-bottom__title", divBottom).textContent = "Attacks description";
+
+const attackFromMonster = createElemWithClass("p", "div-bottom__monster-attack", divBottom);
+const attackFromPlayer = createElemWithClass("p", "div-bottom__player-attack", divBottom);
+const healthPlayerText = createElemWithClass("p", "div-bottom__player-heal", divBottom);
 
 /////////// MODAL
 
@@ -78,15 +86,35 @@ const pModal = createElemWithClass("p", "modal__p", containerInModal);
 const cross = createElemWithClass("img", "modal__cross", containerInModal);
 cross.setAttribute("src", "https://icons.veryicon.com/png/o/miscellaneous/skent-icon/cross-17.png")
 
-/////////// functions
+/////////// functions attacks
 
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
 
-function displayHealthLevel(level, elementText, progressElement) {
-    elementText.textContent = level;
-    progressElement.style.width = `${level}%`;
+/////////// functions attacks description
+
+function displayMonsterAttackDescription(randomNb) {
+    attackFromMonster.textContent = `The monster hits you to ${randomNb}`;
+}
+
+function displayPlayerAttackDescription(randomNb) {
+    attackFromPlayer.textContent = `You hit the monster to ${randomNb}`;
+}
+
+function displayPlayerHealDescription() {
+    healthPlayerText.textContent = "You add 10 points of health";
+}
+
+function removeAllAttacksDescription() {
+    const allAttacksDescription = divBottom.querySelectorAll("p");
+    for (const element of allAttacksDescription) {
+        element.remove();
+    }
+}
+
+function removeHealDescription() {
+    healthPlayerText.textContent = "";
 }
 
 function substractHealthForAttack() {
@@ -96,10 +124,13 @@ function substractHealthForAttack() {
     else {
         const randomNumber = getRndInteger(3, 10);
         healthMonster -= randomNumber;
-        displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster)
+        displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster);
+        displayPlayerAttackDescription(randomNumber);
+
         const randomNumberMonsterAttack = getRndInteger(5, 10);
         healthPlayer -= randomNumberMonsterAttack;
-        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
+        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
+        displayMonsterAttackDescription(randomNumberMonsterAttack);
     }
 }
 
@@ -110,10 +141,13 @@ function substractHealthForSpecialAttack() {
     else {
         const randomNumber = getRndInteger(10, 20);
         healthMonster -= randomNumber;
-        displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster)
+        displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster);
+        displayPlayerAttackDescription(randomNumber);
+        
         const randomNumberMonsterAttack = getRndInteger(5, 10);
         healthPlayer -= randomNumberMonsterAttack;
-        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
+        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
+        displayMonsterAttackDescription(randomNumberMonsterAttack);
     }
 }
 
@@ -122,12 +156,29 @@ function addHealthForPlayer() {
         healthPlayer += 10;
         let randomNumberMonsterAttack = getRndInteger(5, 10);
         healthPlayer -= randomNumberMonsterAttack;
-        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
+        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
+        displayMonsterAttackDescription(randomNumberMonsterAttack);
+        displayPlayerHealDescription(10);
     }
 }
 
+/////////// function to display health
+function displayHealthLevel(level, elementText, progressElement) {
+    elementText.textContent = level;
+    progressElement.style.width = `${level}%`;
+}
+
+
+
+
+/////////// functions for modal
+
 function displayModal() {
     modal.style.display = "flex";
+}
+
+function hiddenModal () {
+    modal.style.display = "none";
 }
 
 function displayButtons() {
@@ -135,13 +186,17 @@ function displayButtons() {
     divMiddle.style.display = "flex";
 }
 
+
+/////////// functions for others features
+
 function resetGame() {
     divMiddleStart.style.display = "flex";
     divMiddle.style.display = "none";
     healthPlayer = 100;
     healthMonster = 100;
-    displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer)
-    displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster)
+    displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
+    displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster);
+    removeAllAttacksDescription();
 }
 
 function blockHealthValue() {
@@ -170,14 +225,20 @@ function giveUp() {
 buttonAttack.addEventListener("click", () => {
     substractHealthForAttack();
     blockHealthValue();
+    removeHealDescription();
 });
 
 buttonSpecial.addEventListener("click", () => {
     substractHealthForSpecialAttack();
     blockHealthValue();
+    removeHealDescription();
 });
 
-buttonHeal.addEventListener("click", addHealthForPlayer);
+buttonHeal.addEventListener("click", () => {
+    addHealthForPlayer();
+    displayPlayerHealDescription();
+    attackFromPlayer.textContent = "";    
+});
 
 buttonGive.addEventListener("click", () => {
     giveUp();
@@ -188,6 +249,16 @@ buttonGive.addEventListener("click", () => {
 cross.addEventListener("click", () => {
     modal.style.display = "none";
     resetGame();
-})
+});
 
-buttonStart.addEventListener("click", displayButtons);
+buttonStart.addEventListener("click", () => {
+    displayModal();
+    pModal.textContent = "FIGHT !";
+    setTimeout(() => {
+        hiddenModal();
+        cross.style.display = "block";
+    },
+    2000);
+    displayButtons();
+});
+
