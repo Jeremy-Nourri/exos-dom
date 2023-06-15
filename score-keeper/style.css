@@ -35,7 +35,7 @@
     animation-name: flash;
     animation-iteration-count: infinite;
 }
- @keyframes flash {
+@keyframes flash {
    0%   { opacity:1; }
    40%   {opacity:0; }
    100% { opacity:1; }
