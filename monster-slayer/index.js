@@ -53,6 +53,9 @@ createElemWithClass("p", "progress-bar-monster__p", progressBarOfMonster).textCo
 const pOfMonsterProgressBar = document.querySelector(".progress-bar-monster__p");
 const pOfPlayerProgressBar = document.querySelector(".progress-bar-player__p");
 
+const gifHealth = createElemWithClass("img", "div-player__gif-health", divPlayer);
+gifHealth.src = "./img/giphy.gif";
+
 /////////// ELEMENTS OF THE MIDDLE
 
 const divMiddleStart = createElemWithClass("div", "container__div-middle-start", container);
@@ -61,10 +64,17 @@ const buttonStart = createButton("div-middle__button-start", "START NEW GAME", d
 
 const divMiddle = createElemWithClass("div", "container__div-middle", container);
 
-const buttonAttack = createButton("div-middle__button-attack", "ATTACK", divMiddle);
-const buttonSpecial = createButton("div-middle__button-special", "SPECIAL ATTACK", divMiddle);
-const buttonHeal = createButton("div-middle__button-attack", "HEAL +10", divMiddle);
-const buttonGive = createButton("div-middle__button-give","GIVE UP", divMiddle);
+const divGifAttack = createElemWithClass("div", "div-top__div-gif-attack", divMiddle);
+const imgGifAttack = createElemWithClass("img", "div-gif-attack__img-attack", divGifAttack);
+imgGifAttack.src = "./img/attack-simple.gif";
+const divGifSpecialAttack = createElemWithClass("div", "div-top__div-gif-special-attack", divMiddle);
+const imgGifSpecialAttack = createElemWithClass("img", "div-gif-attack__img-special-attack", divGifSpecialAttack);
+imgGifSpecialAttack.src = "./img/attack.gif";
+
+const buttonAttack = createButton("div-middle__button-attack", "ATTACK ⚔️", divMiddle);
+const buttonSpecial = createButton("div-middle__button-special", "SPECIAL ATTACK ⚡", divMiddle);
+const buttonHeal = createButton("div-middle__button-attack", "HEAL 💉+10", divMiddle);
+const buttonGive = createButton("div-middle__button-give","GIVE UP 💀", divMiddle);
 
 /////////// BOTTOM ELEMENTS
 
@@ -84,7 +94,11 @@ document.body.appendChild(modal);
 const containerInModal = createElemWithClass("div", "modal__container", modal);
 const pModal = createElemWithClass("p", "modal__p", containerInModal);
 const cross = createElemWithClass("img", "modal__cross", containerInModal);
-cross.setAttribute("src", "https://icons.veryicon.com/png/o/miscellaneous/skent-icon/cross-17.png")
+cross.src = "https://icons.veryicon.com/png/o/miscellaneous/skent-icon/cross-17.png";
+
+const containerForDragon = createElemWithClass("div", "modal__container", modal);
+const gifDragonDie = createElemWithClass("img", "modal__gif", containerForDragon);
+gifDragonDie.src = "./img/dragon-die.gif";
 
 /////////// functions attacks
 
@@ -168,9 +182,6 @@ function displayHealthLevel(level, elementText, progressElement) {
     progressElement.style.width = `${level}%`;
 }
 
-
-
-
 /////////// functions for modal
 
 function displayModal() {
@@ -184,6 +195,13 @@ function hiddenModal () {
 function displayButtons() {
     divMiddleStart.style.display = "none";
     divMiddle.style.display = "flex";
+}
+
+/////////// function to display attack gif
+
+function displayGif(elem) {
+    elem.style.display = "flex";
+    setTimeout(() => elem.style.display = "none", 3000);
 }
 
 
@@ -211,6 +229,7 @@ function blockHealthValue() {
         pOfMonsterProgressBar.textContent = 0;
         displayModal();
         pModal.textContent = "YOU WIN !";
+        gifDragonDie.style.display = "flex";
     }
 }
 
@@ -224,18 +243,21 @@ function giveUp() {
 
 buttonAttack.addEventListener("click", () => {
     substractHealthForAttack();
+    displayGif(divGifAttack);
     blockHealthValue();
     removeHealDescription();
 });
 
 buttonSpecial.addEventListener("click", () => {
     substractHealthForSpecialAttack();
+    displayGif(divGifSpecialAttack);
     blockHealthValue();
     removeHealDescription();
 });
 
 buttonHeal.addEventListener("click", () => {
     addHealthForPlayer();
+    displayGif(gifHealth);
     displayPlayerHealDescription();
     attackFromPlayer.textContent = "";    
 });
