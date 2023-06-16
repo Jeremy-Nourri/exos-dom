@@ -123,13 +123,14 @@ function displayPlayerHealDescription() {
 function removeAllAttacksDescription() {
     const allAttacksDescription = divBottom.querySelectorAll("p");
     for (const element of allAttacksDescription) {
-        element.remove();
+        element.textContent = "";
     }
 }
 
 function removeHealDescription() {
     healthPlayerText.textContent = "";
 }
+
 
 function substractHealthForAttack() {
     if (healthPlayer <= 0 && healthMonster <= 0) {
