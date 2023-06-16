@@ -181,7 +181,7 @@ function displayButtons() {
     divMiddle.style.display = "flex";
 }
 
-/////////// function to display attack gif
+/////////// function to display gif
 
 function displayGif(elem) {
     elem.style.display = "flex";
