@@ -1,6 +1,6 @@
 "use strict"
 // Monster Slayer (Optionnel) Vous devrez créer une page web contenant un petit jeu de combat avec un monstre. La page devra contenir au moins :
-// * Deux barre de vie dynamique (joueur et monstre) * 4 boutons : attaque, attaque spéciale, soin et abandon * Optionnel : Logs du combats (couleurs différenciées joueur et monstre)
+// * Deux barre de vie dynamique (joueur et monstre) * 4 boutons : attaque, attaque spéciale, soin et abandon * Optionnel : Logs du combats 
 
 /////////////// function to add element in DOM with attribute class name
 const createElemWithClass = (tag, className, parent) => {
@@ -64,10 +64,10 @@ const buttonStart = createButton("div-middle__button-start", "START NEW GAME", d
 
 const divMiddle = createElemWithClass("div", "container__div-middle", container);
 
-const divGifAttack = createElemWithClass("div", "div-top__div-gif-attack", divMiddle);
+const divGifAttack = createElemWithClass("div", "div-middle__div-gif-attack", divMiddle);
 const imgGifAttack = createElemWithClass("img", "div-gif-attack__img-attack", divGifAttack);
 imgGifAttack.src = "./img/attack-simple.gif";
-const divGifSpecialAttack = createElemWithClass("div", "div-top__div-gif-special-attack", divMiddle);
+const divGifSpecialAttack = createElemWithClass("div", "div-middle__div-gif-special-attack", divMiddle);
 const imgGifSpecialAttack = createElemWithClass("img", "div-gif-attack__img-special-attack", divGifSpecialAttack);
 imgGifSpecialAttack.src = "./img/attack.gif";
 
