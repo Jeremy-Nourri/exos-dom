@@ -100,11 +100,6 @@ const containerForDragon = createElemWithClass("div", "modal__container", modal)
 const gifDragonDie = createElemWithClass("img", "modal__gif", containerForDragon);
 gifDragonDie.src = "./img/dragon-die.gif";
 
-/////////// functions attacks
-
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
-}
 
 /////////// functions attacks description
 
@@ -131,34 +126,22 @@ function removeHealDescription() {
     healthPlayerText.textContent = "";
 }
 
+/////////// functions attacks
 
-function substractHealthForAttack() {
-    if (healthPlayer <= 0 && healthMonster <= 0) {
-        return
-    }
-    else {
-        const randomNumber = getRndInteger(3, 10);
-        healthMonster -= randomNumber;
-        displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster);
-        displayPlayerAttackDescription(randomNumber);
-
-        const randomNumberMonsterAttack = getRndInteger(5, 10);
-        healthPlayer -= randomNumberMonsterAttack;
-        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
-        displayMonsterAttackDescription(randomNumberMonsterAttack);
-    }
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min) ) + min;
 }
 
-function substractHealthForSpecialAttack() {
+function substractHealthForAttack(min, max) {
     if (healthPlayer <= 0 && healthMonster <= 0) {
         return
     }
     else {
-        const randomNumber = getRndInteger(10, 20);
+        const randomNumber = getRndInteger(min, max);
         healthMonster -= randomNumber;
         displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster);
         displayPlayerAttackDescription(randomNumber);
-        
+
         const randomNumberMonsterAttack = getRndInteger(5, 10);
         healthPlayer -= randomNumberMonsterAttack;
         displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
@@ -243,14 +226,14 @@ function giveUp() {
 /////////// events listener 
 
 buttonAttack.addEventListener("click", () => {
-    substractHealthForAttack();
+    substractHealthForAttack(3, 10);
     displayGif(divGifAttack);
     blockHealthValue();
     removeHealDescription();
 });
 
 buttonSpecial.addEventListener("click", () => {
-    substractHealthForSpecialAttack();
+    substractHealthForAttack(10, 20);
     displayGif(divGifSpecialAttack);
     blockHealthValue();
     removeHealDescription();
