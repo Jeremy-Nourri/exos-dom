@@ -216,7 +216,7 @@ function blockHealthValue() {
             displayModal();
             pModal.textContent = "YOU WIN !";
             gifDragonDie.style.display = "flex";
-        }, 3000);
+        }, 2900);
     }
 }
 
@@ -244,7 +244,6 @@ buttonSpecial.addEventListener("click", () => {
 
 buttonHeal.addEventListener("click", () => {
     addHealthForPlayer();
-    displayPlayerHealDescription();
     attackFromPlayer.textContent = "";    
 });
 
