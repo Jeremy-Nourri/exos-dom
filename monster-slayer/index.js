@@ -157,6 +157,7 @@ function addHealthForPlayer() {
         displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
         displayMonsterAttackDescription(randomNumberMonsterAttack);
         displayPlayerHealDescription(10);
+        displayGif(gifHealth);
     }
 }
 
@@ -241,7 +242,6 @@ buttonSpecial.addEventListener("click", () => {
 
 buttonHeal.addEventListener("click", () => {
     addHealthForPlayer();
-    displayGif(gifHealth);
     displayPlayerHealDescription();
     attackFromPlayer.textContent = "";    
 });
