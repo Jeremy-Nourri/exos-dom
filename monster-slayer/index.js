@@ -212,9 +212,11 @@ function blockHealthValue() {
     if (healthMonster <= 0) {
         progressBarOfMonster.style.width = 0;
         pOfMonsterProgressBar.textContent = 0;
-        displayModal();
-        pModal.textContent = "YOU WIN !";
-        gifDragonDie.style.display = "flex";
+        setTimeout(() => {
+            displayModal();
+            pModal.textContent = "YOU WIN !";
+            gifDragonDie.style.display = "flex";
+        }, 3000);
     }
 }
 
