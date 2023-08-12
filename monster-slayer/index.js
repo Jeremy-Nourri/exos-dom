@@ -1,8 +1,7 @@
 "use strict"
-// Monster Slayer (Optionnel) Vous devrez créer une page web contenant un petit jeu de combat avec un monstre. La page devra contenir au moins :
-// * Deux barre de vie dynamique (joueur et monstre) * 4 boutons : attaque, attaque spéciale, soin et abandon * Optionnel : Logs du combats 
 
-/////////////// function to add element in DOM with attribute class name
+
+/////////////// function to add element in DOM with class name attributes 
 const createElemWithClass = (tag, className, parent) => {
     const elem = document.createElement(tag);
     elem.setAttribute("class", className);
@@ -10,7 +9,7 @@ const createElemWithClass = (tag, className, parent) => {
     return elem;
 };
 
-/////////////// function to add button in DOM with attribute type and class name
+/////////////// function to add button in DOM with type and class name attribute 
 const createButton = (className, text, parent) => {
     const btn = document.createElement("button");
     btn.setAttribute("type", "button");
@@ -28,7 +27,6 @@ document.body.appendChild(container);
 /////////// Init value
 let healthPlayer = 100;
 let healthMonster = 100;
-
 
 ///////// TOP ELEMENTS
 
@@ -64,12 +62,13 @@ const buttonStart = createButton("div-middle__button-start", "START NEW GAME", d
 
 const divMiddle = createElemWithClass("div", "container__div-middle", container);
 
+
 const divGifAttack = createElemWithClass("div", "div-middle__div-gif-attack", divMiddle);
 const imgGifAttack = createElemWithClass("img", "div-gif-attack__img-attack", divGifAttack);
-imgGifAttack.src = "./img/attack-simple.gif";
+
 const divGifSpecialAttack = createElemWithClass("div", "div-middle__div-gif-special-attack", divMiddle);
-const imgGifSpecialAttack = createElemWithClass("img", "div-gif-attack__img-special-attack", divGifSpecialAttack);
-imgGifSpecialAttack.src = "./img/attack.gif";
+const imgGifSpecialAttack = createElemWithClass("img", "div-gif-attack__img-special-attack", divGifSpecialAttack)
+
 
 const buttonAttack = createButton("div-middle__button-attack", "ATTACK ⚔️", divMiddle);
 const buttonSpecial = createButton("div-middle__button-special", "SPECIAL ATTACK ⚡", divMiddle);
@@ -99,6 +98,7 @@ cross.src = "https://icons.veryicon.com/png/o/miscellaneous/skent-icon/cross-17.
 const containerForDragon = createElemWithClass("div", "modal__container", modal);
 const gifDragonDie = createElemWithClass("img", "modal__gif", containerForDragon);
 gifDragonDie.src = "./img/dragon-die.gif";
+
 
 
 /////////// functions attacks description
@@ -158,6 +158,14 @@ function addHealthForPlayer() {
         displayMonsterAttackDescription(randomNumberMonsterAttack);
         displayPlayerHealDescription(10);
         displayGif(gifHealth);
+    } else if (healthPlayer >= 90){
+        healthPlayer = 100;
+        let randomNumberMonsterAttack = getRndInteger(5, 10);
+        healthPlayer -= randomNumberMonsterAttack;
+        displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
+        displayMonsterAttackDescription(randomNumberMonsterAttack);
+        displayPlayerHealDescription(10);
+        displayGif(gifHealth);
     }
 }
 
@@ -182,13 +190,30 @@ function displayButtons() {
     divMiddle.style.display = "flex";
 }
 
+/////////// arrays of gifs attacks
+const arrayGifSpecialAttack = ["./img/attack.gif", "./img/attack-2.gif"];
+
+const arrayGifAttack = ["./img/attack-simple.gif", "./img/attack-simple-2.gif"];
+
+
 /////////// function to display gif
 
-function displayGif(elem) {
-    elem.style.display = "flex";
-    setTimeout(() => elem.style.display = "none", 3000);
+function displayGifRandom(divGif, imgGif, arrayGif) {
+    let indexGif = getRndInteger(0, arrayGif.length);
+    imgGif.src = arrayGif[indexGif];
+    divGif.style.display = "flex";
+    setTimeout(() => {
+        divGif.style.display = "none";
+    }, 3000);
 }
 
+/////////// function to display gif for heal
+function displayGif(gif) {
+    gif.style.display = "flex";
+    setTimeout(() => {
+        gif.style.display = "none";
+    }, 3000);
+}
 
 /////////// functions for others features
 
@@ -230,14 +255,14 @@ function giveUp() {
 
 buttonAttack.addEventListener("click", () => {
     substractHealthForAttack(3, 10);
-    displayGif(divGifAttack);
+    displayGifRandom(divGifAttack, imgGifAttack, arrayGifAttack);
     blockHealthValue();
     removeHealDescription();
 });
 
 buttonSpecial.addEventListener("click", () => {
     substractHealthForAttack(10, 20);
-    displayGif(divGifSpecialAttack);
+    displayGifRandom(divGifSpecialAttack, imgGifSpecialAttack, arrayGifSpecialAttack);
     blockHealthValue();
     removeHealDescription();
 });
