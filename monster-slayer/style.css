@@ -5,7 +5,6 @@
     font-style: normal;
 }
 
-
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-image: url("./img/background.jpg");
@@ -29,6 +28,7 @@ body {
     justify-content: space-around;
     background-color: transparent;
 }
+
 .div-middle__div-gif-special-attack,
 .div-middle__div-gif-attack {
     width: 100%;
@@ -49,12 +49,22 @@ body {
 
 .div-top__div-player,
 .div-top__div-monster {
-    width: 30%;
+    width: 25%;
     display: flex;
     flex-direction: column;
     border: 0.1rem black solid;
     text-align: center;
     font-weight: 700;
+}
+
+.div-top__div-player {
+    position: relative;
+}
+
+.div-player__gif-health {
+    width: 100%;
+    position: absolute;
+    display: none;
 }
 
 .div-monster__progress-bar-container-monster, 
@@ -78,20 +88,9 @@ body {
     margin: 0;
 }
 
-.div-top__div-player {
-    position: relative;
-}
-
-.div-player__gif-health {
-    width: 100%;
-    position: absolute;
-    display: none;
-}
-
 .container__div-middle,
 .container__div-middle-start {
     width: 60%;
-    height: 7rem;
     justify-content: space-evenly;
     align-items: center;
     box-shadow: 5px 5px 5px rgba(77, 77, 77, 0.706);
@@ -104,9 +103,43 @@ body {
 .container__div-middle {
     display: none;
     position: relative;
+    height: 7rem;
 }
+
 .container__div-middle-start {
     display: flex;
+    height: 30%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    flex-direction: column;
+}
+
+.div-middle-start__title {
+    font-size: 2.8rem;
+    font-weight: 600;
+    font-family: 'permanent_markerregular';
+    color: #ffff;
+    margin: 0 auto;   
+}
+
+.div-middle-start__span-title {
+    background-image: url("https://dl.dropbox.com/s/r2s8s2r17wi0xm6/flame.png?dl=0");
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fire 6s infinite linear;
+}
+
+.div-rules__p {
+    list-style: none;
+    color: #ffff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0.4rem auto;
+}
+
+.div-middle__button-start {
+    margin: 0.7rem auto;
 }
 
 button {
@@ -182,3 +215,13 @@ button:hover {
     70% {opacity:0; }
     90% { opacity:1; }
 }
+
+@keyframes fire {
+    0% {
+      background-position: 0% -50%;
+    }
+    100% {
+      background-position: 0% -20%;
+    }
+  }
+  
