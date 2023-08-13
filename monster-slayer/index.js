@@ -28,6 +28,9 @@ document.body.appendChild(container);
 let healthPlayer = 100;
 let healthMonster = 100;
 
+let counterHeal = 3;
+let counterSpecialAttack = 3;
+
 ///////// TOP ELEMENTS
 
 const divTop = createElemWithClass("div", "container__div-top", container);
@@ -57,6 +60,22 @@ gifHealth.src = "./img/giphy.gif";
 /////////// ELEMENTS OF THE MIDDLE
 
 const divMiddleStart = createElemWithClass("div", "container__div-middle-start", container);
+const tittle = createElemWithClass("h1", "div-middle-start__title", divMiddleStart);
+const spanTitle = createElemWithClass("span", "div-middle-start__span-title", tittle).textContent = "Game Dragon Slayer";
+
+const rulesArray = [
+    "You play as the warrior who must fight the dragon (from the game Elden Ring).",
+    "ATTACK ⚔️: the dragon loses 2 to 10 life points, you lose 5 to 9 life points.",
+    "SPECIAL ATTACK ⚡: the dragon loses 10 to 20 life points, you lose 5 to 9 life points. You can use it 3 times.",
+    "HEAL 💉: you can add 10 life points, be careful during this time the dragon attacks you. You can use it 3 times."    
+]
+
+const divRules = createElemWithClass("div", "div-rules", divMiddleStart);
+
+for (const rule of rulesArray) {
+    const pRules = createElemWithClass("p", "div-rules__p", divRules);
+    pRules.textContent = rule;
+};
 
 const buttonStart = createButton("div-middle__button-start", "START NEW GAME", divMiddleStart);
 
@@ -67,12 +86,13 @@ const divGifAttack = createElemWithClass("div", "div-middle__div-gif-attack", di
 const imgGifAttack = createElemWithClass("img", "div-gif-attack__img-attack", divGifAttack);
 
 const divGifSpecialAttack = createElemWithClass("div", "div-middle__div-gif-special-attack", divMiddle);
-const imgGifSpecialAttack = createElemWithClass("img", "div-gif-attack__img-special-attack", divGifSpecialAttack)
+const imgGifSpecialAttack = createElemWithClass("img", "div-gif-attack__img-special-attack", divGifSpecialAttack);
 
 
 const buttonAttack = createButton("div-middle__button-attack", "ATTACK ⚔️", divMiddle);
-const buttonSpecial = createButton("div-middle__button-special", "SPECIAL ATTACK ⚡", divMiddle);
-const buttonHeal = createButton("div-middle__button-attack", "HEAL 💉+10", divMiddle);
+const buttonSpecial = createButton("div-middle__button-special", `x${counterSpecialAttack} | SPECIAL ATTACK ⚡`, divMiddle);
+const buttonHeal = createButton("div-middle__button-attack", `x${counterHeal} | HEAL 💉+10`, divMiddle);
+buttonHeal.setAttribute("disabled", "disabled");
 const buttonGive = createButton("div-middle__button-give","GIVE UP 💀", divMiddle);
 
 /////////// BOTTOM ELEMENTS
@@ -98,7 +118,6 @@ cross.src = "https://icons.veryicon.com/png/o/miscellaneous/skent-icon/cross-17.
 const containerForDragon = createElemWithClass("div", "modal__container", modal);
 const gifDragonDie = createElemWithClass("img", "modal__gif", containerForDragon);
 gifDragonDie.src = "./img/dragon-die.gif";
-
 
 
 /////////// functions attacks description
@@ -142,7 +161,7 @@ function substractHealthForAttack(min, max) {
         displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster);
         displayPlayerAttackDescription(randomNumber);
 
-        const randomNumberMonsterAttack = getRndInteger(5, 10);
+        const randomNumberMonsterAttack = getRndInteger(5, 9);
         healthPlayer -= randomNumberMonsterAttack;
         displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
         displayMonsterAttackDescription(randomNumberMonsterAttack);
@@ -166,7 +185,7 @@ function addHealthForPlayer() {
         displayMonsterAttackDescription(randomNumberMonsterAttack);
         displayPlayerHealDescription(10);
         displayGif(gifHealth);
-    }
+    }   
 }
 
 /////////// function to display health
@@ -222,6 +241,12 @@ function resetGame() {
     divMiddle.style.display = "none";
     healthPlayer = 100;
     healthMonster = 100;
+    counterHeal = 3;
+    counterSpecialAttack = 3;
+    buttonHeal.textContent = `x${counterHeal} | HEAL 💉+10`;
+    buttonSpecial.textContent = `x${counterSpecialAttack} | SPECIAL ATTACK ⚡`;
+    buttonSpecial.removeAttribute("disabled");
+    buttonHeal.removeAttribute("disabled");
     displayHealthLevel(healthPlayer, pOfPlayerProgressBar, progressBarOfPlayer);
     displayHealthLevel(healthMonster, pOfMonsterProgressBar, progressBarOfMonster);
     removeAllAttacksDescription();
@@ -251,13 +276,22 @@ function giveUp() {
     progressBarOfPlayer.style.width = `${healthPlayer}%`;
 }
 
+function handleDisableHealButton() {
+    if (healthPlayer < 100 && counterHeal > 0) {
+        buttonHeal.removeAttribute("disabled");
+    } else if (counterHeal === 0) {
+        buttonHeal.setAttribute("disabled", "disabled");
+    }
+}
+
 /////////// events listener 
 
 buttonAttack.addEventListener("click", () => {
-    substractHealthForAttack(3, 10);
+    substractHealthForAttack(2, 10);
     displayGifRandom(divGifAttack, imgGifAttack, arrayGifAttack);
     blockHealthValue();
     removeHealDescription();
+    handleDisableHealButton();
 });
 
 buttonSpecial.addEventListener("click", () => {
@@ -265,11 +299,20 @@ buttonSpecial.addEventListener("click", () => {
     displayGifRandom(divGifSpecialAttack, imgGifSpecialAttack, arrayGifSpecialAttack);
     blockHealthValue();
     removeHealDescription();
+    handleDisableHealButton();
+    counterSpecialAttack--;
+    buttonSpecial.textContent = `x${counterSpecialAttack} | SPECIAL ATTACK ⚡`;
+    if (counterSpecialAttack === 0) {
+        buttonSpecial.setAttribute("disabled", "disabled");
+    }
 });
 
 buttonHeal.addEventListener("click", () => {
     addHealthForPlayer();
-    attackFromPlayer.textContent = "";    
+    counterHeal--;
+    buttonHeal.textContent = `x${counterHeal} | HEAL 💉+10`;
+    attackFromPlayer.textContent = "";
+    handleDisableHealButton();
 });
 
 buttonGive.addEventListener("click", () => {
