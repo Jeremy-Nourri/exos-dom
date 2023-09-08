@@ -24,10 +24,12 @@ body {
     height: 30%;
     position: relative;
     display: flex;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
     justify-content: space-around;
     background-color: transparent;
 }
+
+
 
 .div-middle__div-gif-special-attack,
 .div-middle__div-gif-attack {
@@ -130,11 +132,21 @@ body {
     animation: fire 6s infinite linear;
 }
 
+.div-middle-start__welcome {
+    margin: 0.7rem auto;
+    color: #ffffff;
+    font-family: calibri, Verdana, Geneva, Tahoma;
+
+}
+
 .div-rules__p {
+    width: 85%;
     list-style: none;
     color: #ffff;
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-family: calibri, Verdana, Geneva, Tahoma;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: justify;
     margin: 0.4rem auto;
 }
 

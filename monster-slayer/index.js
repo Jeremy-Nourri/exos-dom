@@ -1,5 +1,6 @@
 "use strict"
 
+/////////////// FUNCTION TO ADD ELEMETNS IN DOM ////////////////////////
 
 /////////////// function to add element in DOM with class name attributes 
 const createElemWithClass = (tag, className, parent) => {
@@ -24,7 +25,7 @@ const container = document.createElement("div");
 container.setAttribute("class", "container");
 document.body.appendChild(container);
 
-/////////// Init value
+/////////// INITIALISATION OF VARIABLES ///////////////
 let healthPlayer = 100;
 let healthMonster = 100;
 
@@ -61,10 +62,12 @@ gifHealth.src = "./img/giphy.gif";
 
 const divMiddleStart = createElemWithClass("div", "container__div-middle-start", container);
 const tittle = createElemWithClass("h1", "div-middle-start__title", divMiddleStart);
-const spanTitle = createElemWithClass("span", "div-middle-start__span-title", tittle).textContent = "Game Dragon Slayer";
+createElemWithClass("span", "div-middle-start__span-title", tittle).textContent = "Dragon Slayer";
+
+createElemWithClass("h2", "div-middle-start__welcome", divMiddleStart).textContent = "Welcome to the game Dragon Slayer !";
 
 const rulesArray = [
-    "You play as the warrior who must fight the dragon (from the game Elden Ring).",
+    "The goal of the game is to kill the dragon.",
     "ATTACK ⚔️: the dragon loses 2 to 10 life points, you lose 5 to 9 life points.",
     "SPECIAL ATTACK ⚡: the dragon loses 10 to 20 life points, you lose 5 to 9 life points. You can use it 3 times.",
     "HEAL 💉: you can add 10 life points, be careful during this time the dragon attacks you. You can use it 3 times."    
@@ -88,23 +91,23 @@ const imgGifAttack = createElemWithClass("img", "div-gif-attack__img-attack", di
 const divGifSpecialAttack = createElemWithClass("div", "div-middle__div-gif-special-attack", divMiddle);
 const imgGifSpecialAttack = createElemWithClass("img", "div-gif-attack__img-special-attack", divGifSpecialAttack);
 
-
 const buttonAttack = createButton("div-middle__button-attack", "ATTACK ⚔️", divMiddle);
 const buttonSpecial = createButton("div-middle__button-special", `x${counterSpecialAttack} | SPECIAL ATTACK ⚡`, divMiddle);
 const buttonHeal = createButton("div-middle__button-attack", `x${counterHeal} | HEAL 💉+10`, divMiddle);
 buttonHeal.setAttribute("disabled", "disabled");
 const buttonGive = createButton("div-middle__button-give","GIVE UP 💀", divMiddle);
 
-/////////// BOTTOM ELEMENTS
+
+/////////// BOTTOM ELEMENTS ///////////////
 
 const divBottom = createElemWithClass("div", "container__div-bottom", container);
-const pDivBottom = createElemWithClass("h3", "div-bottom__title", divBottom).textContent = "Attacks description";
+const pDivBottom = createElemWithClass("h3", "div-bottom__title", divBottom).textConten = "Attacks description";
 
 const attackFromMonster = createElemWithClass("p", "div-bottom__monster-attack", divBottom);
 const attackFromPlayer = createElemWithClass("p", "div-bottom__player-attack", divBottom);
 const healthPlayerText = createElemWithClass("p", "div-bottom__player-heal", divBottom);
 
-/////////// MODAL
+/////////// MODAL ELEMENTS ///////////////
 
 const modal = document.createElement("div");
 modal.setAttribute("class", "modal");
@@ -119,6 +122,8 @@ const containerForDragon = createElemWithClass("div", "modal__container", modal)
 const gifDragonDie = createElemWithClass("img", "modal__gif", containerForDragon);
 gifDragonDie.src = "./img/dragon-die.gif";
 
+
+/////////// FUNCTIONS ///////////////
 
 /////////// functions attacks description
 
@@ -189,6 +194,7 @@ function addHealthForPlayer() {
 }
 
 /////////// function to display health
+
 function displayHealthLevel(level, elementText, progressElement) {
     elementText.textContent = level;
     progressElement.style.width = `${level}%`;
@@ -210,12 +216,11 @@ function displayButtons() {
 }
 
 /////////// arrays of gifs attacks
-const arrayGifSpecialAttack = ["./img/attack.gif", "./img/attack-2.gif"];
 
+const arrayGifSpecialAttack = ["./img/attack.gif", "./img/attack-2.gif"];
 const arrayGifAttack = ["./img/attack-simple.gif", "./img/attack-simple-2.gif"];
 
-
-/////////// function to display gif
+/////////// function to display gif for attack
 
 function displayGifRandom(divGif, imgGif, arrayGif) {
     let indexGif = getRndInteger(0, arrayGif.length);
@@ -227,6 +232,7 @@ function displayGifRandom(divGif, imgGif, arrayGif) {
 }
 
 /////////// function to display gif for heal
+
 function displayGif(gif) {
     gif.style.display = "flex";
     setTimeout(() => {
@@ -284,7 +290,7 @@ function handleDisableHealButton() {
     }
 }
 
-/////////// events listener 
+/////////// EVENT LISTENERS ///////////////
 
 buttonAttack.addEventListener("click", () => {
     substractHealthForAttack(2, 10);
@@ -338,4 +344,3 @@ buttonStart.addEventListener("click", () => {
     2000);
     displayButtons();
 });
-
